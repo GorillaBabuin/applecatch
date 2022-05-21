@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>	</title>
+	<style type="text/css">
+		.sphere {
+			background-image: url(isaac.png);
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			border-radius: 100px;
+			transition: all 0.8s ease-out;
+			top: 0px;
+		}
+		.ground {
+			background-image: url(shipy.png);
+			position: absolute;
+			width: 1200px;
+			height: 70px;
+			top:  700px;
+            background-size: 100% 100%;
+		}
+		.pointstext{
+			margin-left: auto;
+            margin-right: auto;
+		}
+		.score{
+            height: 75px;
+            width: 75px;
+            text-align: center;
+            margin-top: 800px;
+            background-size: 100% 100%;
+            position: absolute;
+            background-image: url(void.png);
+        }
+        .win{
+			background-image: url(win.jpg);
+        	height: 1000px;
+        	width: 2000px;
+        	display: none;
+        	position: absolute;
+        	background-size: 100% 100%;
+		}
+        .bg{
+            background-image: url(bg.png);
+        }
+	</style>
+</head>
+<body class="bg">
+<div class="score">score:<h2 class="pointstext">0</h2></div>
+<div class="win"></div>
+<div class="ground">
+	
+</div>
+<script type="text/javascript">
+   let spheretop = 0;
+   let id = 0;
+   let points = 0
+	let random = function(arg){
+        let rand = Math.random() * arg
+        let round = Math.round(rand)
+        return round
+       }
+     
+       for(let i=0; i<10; i=i+1){
+     	let box = document.createElement("div")
+        document.body.appendChild(box)
+        box.classList.add("sphere")
+        box.style.left = random(900) + "px"
+       }
+       let apple = document.querySelectorAll(".sphere")
+        for(let i=0; i<apple.length; i=i+1){
+            apple[i].onclick = function(){
+              apple[i].style.display = "none";
+              spheretop = 900;
+              points = points + 100
+              document.querySelector('.pointstext').innerHTML = points;
+            }
+        }
+    let applefall = function(){
+    	spheretop = spheretop + 150
+    	apple[id].style.top = spheretop + "px"
+
+    	if (spheretop >= 900){
+    	   spheretop = 0;
+           apple[id].style.display = "none"
+           id = id + 1
+           if(id==10){
+              stopgame()
+           }
+    	}
+    }
+    setInterval(applefall,300)
+    let stopgame = function(){
+       if(points == 600){
+       	 clearInterval(applefall)
+         document.querySelector('.win').style.display = 'block';
+       }
+    }
+    
+
+
+</script>
+</body>
+</html>
